@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UTFDataFormatException;
 import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -54,6 +55,15 @@ public class Test {
 			if(netInterface.getInterfaceAddresses().size()>0){
 				list.add(netInterface);
 				System.out.println("本机的IP = " + netInterface.getInterfaceAddresses().get(0).getAddress());
+				if(netInterface.getInterfaceAddresses().get(0).getAddress() instanceof Inet6Address && netInterface.getInterfaceAddresses().size()>1){
+					for(InterfaceAddress inetAddress:netInterface.getInterfaceAddresses()){
+						if(inetAddress.getAddress() instanceof Inet4Address){
+							System.out.println("本机另一个IP = " + inetAddress.getAddress());
+						}
+					}
+				}
+				System.out.println(netInterface.getName()+"\t"+netInterface.isUp()+"\t"+netInterface.isVirtual());
+				System.out.println("---");
 			}
 		}
 		return list;
